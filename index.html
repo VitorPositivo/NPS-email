@@ -130,6 +130,7 @@
             display: flex;
             justify-content: space-between;
             margin: 20px 0;
+            flex-wrap: wrap;
         }
         
         .scale-option {
@@ -141,6 +142,7 @@
             border-radius: 8px;
             transition: all 0.3s;
             width: 60px;
+            margin-bottom: 10px;
         }
         
         .scale-option:hover {
@@ -150,17 +152,6 @@
         .scale-option.selected {
             background-color: var(--positivo-blue);
             color: white;
-        }
-        
-        .scale-number {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .scale-label {
-            font-size: 12px;
-            text-align: center;
         }
         
         textarea, input[type="text"] {
@@ -173,12 +164,12 @@
             resize: vertical;
         }
         
-        .audio-container {
+        .audio-container, .file-container {
             margin-top: 15px;
             text-align: center;
         }
         
-        .audio-btn {
+        .audio-btn, .file-btn {
             background-color: var(--positivo-orange);
             color: white;
             border: none;
@@ -190,9 +181,10 @@
             align-items: center;
             gap: 8px;
             transition: background-color 0.3s;
+            margin: 5px;
         }
         
-        .audio-btn:hover {
+        .audio-btn:hover, .file-btn:hover {
             background-color: #e55a00;
         }
         
@@ -287,6 +279,121 @@
             color: var(--positivo-orange);
             font-weight: bold;
         }
+        
+        .welcome-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            background-color: var(--positivo-light-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: var(--positivo-blue);
+        }
+        
+        .welcome-message {
+            font-size: 18px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .highlight {
+            color: var(--positivo-orange);
+            font-weight: bold;
+        }
+        
+        .problem-not-resolved {
+            background-color: #fff4f4;
+            border-left: 5px solid #ff6b6b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .problem-not-resolved h3 {
+            color: #d63636;
+            margin-bottom: 15px;
+        }
+        
+        .feedback-options {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .feedback-option-btn {
+            padding: 12px 25px;
+            border: 2px solid var(--positivo-blue);
+            border-radius: 8px;
+            background-color: white;
+            color: var(--positivo-blue);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .feedback-option-btn:hover {
+            background-color: var(--positivo-light-blue);
+        }
+        
+        .feedback-option-btn.selected {
+            background-color: var(--positivo-blue);
+            color: white;
+        }
+        
+        .additional-feedback {
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .file-preview {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .file-preview-item {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .file-preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .file-preview-item .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            color: #ff3333;
+        }
     </style>
 </head>
 <body>
@@ -294,25 +401,85 @@
         <header>
             <img src="https://www.positivotecnologia.com.br/wp-content/themes/positivo/img/logo-positivo.png" alt="Positivo Tecnologia" class="logo">
             <h1>Pesquisa de Satisfação</h1>
-            <p class="intro">Sua opinião é muito importante para continuarmos melhorando nossos produtos e serviços.</p>
             
             <div class="progress-container">
                 <div class="progress-bar" id="progress-bar"></div>
             </div>
         </header>
         
+        <!-- Tela de Boas-Vindas -->
+        <div class="welcome-container active" id="welcome-screen">
+            <div class="avatar">
+                <i class="fas fa-robot"></i>
+            </div>
+            <p class="welcome-message">
+                Oi, tudo bem? Eu sou o <span class="highlight">Pedro</span>, assistente virtual da Positivo! 😊<br><br>
+                
+                Percebi que você recebeu um atendimento na assistência da <span class="highlight">Positivo Tecnologia</span> recentemente 
+                (Protocolo de atendimento: <span class="highlight" id="protocol-number">CT123456</span>). 
+                A data de encerramento desse atendimento foi em <span class="highlight" id="closure-date">25/10/2023</span>.<br><br>
+                
+                Gostaria de saber como foi sua experiência, pois estamos sempre buscando oferecer o melhor serviço possível.<br><br>
+                
+                Sua opinião é super importante para nós! Você pode me contar como foi?
+            </p>
+            <button type="button" class="nav-btn next-btn" id="start-survey">Iniciar Pesquisa <i class="fas fa-arrow-right"></i></button>
+        </div>
+        
         <form id="satisfaction-survey">
             <!-- Pergunta 1 -->
-            <div class="question-container active" id="question-1">
+            <div class="question-container" id="question-1">
                 <p class="question-title">O seu problema com o equipamento <span class="equipment-name" id="equipment-name">Notebook Positivo</span>, foi resolvido?</p>
                 <div class="options-container">
                     <button type="button" class="option-btn" data-value="sim">Sim</button>
+                    <button type="button" class="option-btn" data-value="parcialmente">Parcialmente</button>
                     <button type="button" class="option-btn" data-value="nao">Não</button>
                 </div>
                 
                 <div class="nav-buttons">
-                    <div></div> <!-- Espaço vazio para alinhar o próximo botão à direita -->
+                    <div></div>
                     <button type="button" class="nav-btn next-btn">Próxima <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Tela de Problema Não Resolvido -->
+            <div class="question-container" id="problem-not-resolved">
+                <div class="problem-not-resolved">
+                    <h3><i class="fas fa-exclamation-circle"></i> Que pena!</h3>
+                    <p>Não é essa experiência que gostaríamos de passar a nossos clientes.</p>
+                    <p>A nossa equipe já foi notificada e entrará em contato em breve para resolver o problema com seu equipamento.</p>
+                </div>
+                
+                <p class="question-title">Deseja adicionar mais informações ou possui outro feedback?</p>
+                
+                <div class="feedback-options">
+                    <button type="button" class="feedback-option-btn" data-value="sim">Sim</button>
+                    <button type="button" class="feedback-option-btn" data-value="nao">Não</button>
+                </div>
+                
+                <div class="additional-feedback" id="additional-feedback">
+                    <textarea placeholder="Por favor, compartilhe mais detalhes sobre sua experiência..." rows="4"></textarea>
+                    
+                    <div class="file-container">
+                        <button type="button" class file-btn>
+                            <i class="fas fa-camera"></i> Adicionar Fotos
+                        </button>
+                        <button type="button" class="file-btn">
+                            <i class="fas fa-video"></i> Adicionar Vídeo
+                        </button>
+                        <button type="button" class="audio-btn" id="record-audio">
+                            <i class="fas fa-microphone"></i> Gravar Áudio
+                        </button>
+                    </div>
+                    
+                    <div class="audio-visualization" id="audio-visualization"></div>
+                    
+                    <div class="file-preview" id="file-preview"></div>
+                </div>
+                
+                <div class="nav-buttons">
+                    <button type="button" class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Anterior</button>
+                    <button type="button" class="nav-btn next-btn">Continuar <i class="fas fa-arrow-right"></i></button>
                 </div>
             </div>
             
@@ -346,12 +513,10 @@
                     <textarea placeholder="Por favor, especifique..." rows="3"></textarea>
                     
                     <div class="audio-container">
-                        <button type="button" class="audio-btn" id="record-audio">
+                        <button type="button" class="audio-btn" id="record-audio-2">
                             <i class="fas fa-microphone"></i> Gravar Áudio
                         </button>
-                        <div class="audio-visualization" id="audio-visualization">
-                            <!-- Barras de visualização de áudio geradas via JS -->
-                        </div>
+                        <div class="audio-visualization" id="audio-visualization-2"></div>
                     </div>
                 </div>
                 
@@ -415,18 +580,31 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Configurações iniciais
             const totalQuestions = 6;
-            let currentQuestion = 1;
+            let currentQuestion = 0; // 0 = tela de boas-vindas
             const equipmentName = "Notebook Positivo"; // Seria substituído pelo equipamento real
+            const protocolNumber = "CT789123"; // Número do protocolo
+            const closureDate = "25/10/2023"; // Data de encerramento
             
             // Elementos DOM
             const progressBar = document.getElementById('progress-bar');
             const equipmentNameElements = document.querySelectorAll('.equipment-name');
+            const welcomeScreen = document.getElementById('welcome-screen');
+            const protocolElement = document.getElementById('protocol-number');
+            const closureDateElement = document.getElementById('closure-date');
             const questionContainers = document.querySelectorAll('.question-container');
             const nextButtons = document.querySelectorAll('.next-btn');
             const prevButtons = document.querySelectorAll('.prev-btn');
             const submitButton = document.querySelector('.submit-btn');
             const surveyForm = document.getElementById('satisfaction-survey');
             const thankYouSection = document.getElementById('thank-you');
+            const startSurveyBtn = document.getElementById('start-survey');
+            const problemNotResolvedScreen = document.getElementById('problem-not-resolved');
+            const feedbackOptionBtns = document.querySelectorAll('.feedback-option-btn');
+            const additionalFeedback = document.getElementById('additional-feedback');
+            
+            // Inicializar dados
+            protocolElement.textContent = protocolNumber;
+            closureDateElement.textContent = closureDate;
             
             // Atualizar o nome do equipamento em todos os lugares
             equipmentNameElements.forEach(el => {
@@ -443,6 +621,14 @@
             
             prevButtons.forEach(button => {
                 button.addEventListener('click', goToPrevQuestion);
+            });
+            
+            // Iniciar pesquisa
+            startSurveyBtn.addEventListener('click', function() {
+                welcomeScreen.classList.remove('active');
+                currentQuestion = 1;
+                document.getElementById('question-1').classList.add('active');
+                updateProgressBar();
             });
             
             // Configurar botões de opção
@@ -463,11 +649,36 @@
                     } else {
                         document.getElementById('outro-container').style.display = 'none';
                     }
+                    
+                    // Se for a primeira pergunta e resposta for "Não", preparar para mostrar tela especial
+                    if (this.parentElement.parentElement.id === 'question-1' && this.dataset.value === 'nao') {
+                        // Vamos lidar com isso na navegação
+                    }
+                });
+            });
+            
+            // Configurar botões de feedback (Sim/Não para problema não resolvido)
+            feedbackOptionBtns.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remover seleção anterior
+                    const siblings = this.parentElement.querySelectorAll('.feedback-option-btn');
+                    siblings.forEach(btn => btn.classList.remove('selected'));
+                    
+                    // Selecionar o atual
+                    this.classList.add('selected');
+                    
+                    // Mostrar/ocultar campos adicionais com base na seleção
+                    if (this.dataset.value === 'sim') {
+                        additionalFeedback.style.display = 'block';
+                    } else {
+                        additionalFeedback.style.display = 'none';
+                    }
                 });
             });
             
             // Configurar gravação de áudio (simulação)
             const recordAudioBtn = document.getElementById('record-audio');
+            const recordAudioBtn2 = document.getElementById('record-audio-2');
             let isRecording = false;
             
             recordAudioBtn.addEventListener('click', function() {
@@ -476,11 +687,26 @@
                 if (isRecording) {
                     this.classList.add('recording');
                     this.innerHTML = '<i class="fas fa-stop"></i> Parar Gravação';
-                    simulateAudioVisualization();
+                    simulateAudioVisualization('audio-visualization');
                 } else {
                     this.classList.remove('recording');
                     this.innerHTML = '<i class="fas fa-microphone"></i> Gravar Áudio';
-                    stopAudioVisualization();
+                    stopAudioVisualization('audio-visualization');
+                    alert('Áudio gravado com sucesso!');
+                }
+            });
+            
+            recordAudioBtn2.addEventListener('click', function() {
+                isRecording = !isRecording;
+                
+                if (isRecording) {
+                    this.classList.add('recording');
+                    this.innerHTML = '<i class="fas fa-stop"></i> Parar Gravação';
+                    simulateAudioVisualization('audio-visualization-2');
+                } else {
+                    this.classList.remove('recording');
+                    this.innerHTML = '<i class="fas fa-microphone"></i> Gravar Áudio';
+                    stopAudioVisualization('audio-visualization-2');
                     alert('Áudio gravado com sucesso!');
                 }
             });
@@ -499,25 +725,80 @@
             
             // Funções de navegação
             function goToNextQuestion() {
+                // Verificar se estamos na primeira pergunta e a resposta foi "Não"
+                if (currentQuestion === 1) {
+                    const selectedOption = document.querySelector('#question-1 .option-btn.selected');
+                    if (selectedOption && selectedOption.dataset.value === 'nao') {
+                        // Ir para a tela de problema não resolvido em vez da próxima pergunta
+                        document.getElementById('question-1').classList.remove('active');
+                        problemNotResolvedScreen.classList.add('active');
+                        currentQuestion = 1.5; // Tela especial
+                        updateProgressBar();
+                        return;
+                    }
+                }
+                
+                // Verificar se estamos na tela de problema não resolvido
+                if (currentQuestion === 1.5) {
+                    problemNotResolvedScreen.classList.remove('active');
+                    currentQuestion = 2;
+                    document.getElementById('question-2').classList.add('active');
+                    updateProgressBar();
+                    return;
+                }
+                
+                // Navegação normal
                 if (currentQuestion < totalQuestions) {
-                    questionContainers[currentQuestion - 1].classList.remove('active');
+                    document.getElementById(`question-${currentQuestion}`).classList.remove('active');
                     currentQuestion++;
-                    questionContainers[currentQuestion - 1].classList.add('active');
+                    document.getElementById(`question-${currentQuestion}`).classList.add('active');
                     updateProgressBar();
                 }
             }
             
             function goToPrevQuestion() {
+                // Verificar se estamos na tela de problema não resolvido
+                if (currentQuestion === 1.5) {
+                    problemNotResolvedScreen.classList.remove('active');
+                    currentQuestion = 1;
+                    document.getElementById('question-1').classList.add('active');
+                    updateProgressBar();
+                    return;
+                }
+                
+                // Verificar se estamos na segunda pergunta e viemos de uma tela especial
+                if (currentQuestion === 2 && problemNotResolvedScreen.classList.contains('active') === false) {
+                    document.getElementById('question-2').classList.remove('active');
+                    currentQuestion = 1.5;
+                    problemNotResolvedScreen.classList.add('active');
+                    updateProgressBar();
+                    return;
+                }
+                
+                // Navegação normal
                 if (currentQuestion > 1) {
-                    questionContainers[currentQuestion - 1].classList.remove('active');
+                    document.getElementById(`question-${currentQuestion}`).classList.remove('active');
                     currentQuestion--;
-                    questionContainers[currentQuestion - 1].classList.add('active');
+                    document.getElementById(`question-${currentQuestion}`).classList.add('active');
+                    updateProgressBar();
+                } else if (currentQuestion === 1) {
+                    // Voltar para a tela de boas-vindas
+                    document.getElementById('question-1').classList.remove('active');
+                    welcomeScreen.classList.add('active');
+                    currentQuestion = 0;
                     updateProgressBar();
                 }
             }
             
             function updateProgressBar() {
-                const progress = (currentQuestion / totalQuestions) * 100;
+                let progress;
+                if (currentQuestion === 0) {
+                    progress = 0;
+                } else if (currentQuestion === 1.5) {
+                    progress = (1.5 / totalQuestions) * 100;
+                } else {
+                    progress = (currentQuestion / totalQuestions) * 100;
+                }
                 progressBar.style.width = `${progress}%`;
             }
             
@@ -525,93 +806,52 @@
                 // Escala 0-10 para pergunta 2
                 const scaleContainer2 = document.querySelector('#question-2 .scale-container');
                 for (let i = 0; i <= 10; i++) {
-                    const scaleOption = document.createElement('div');
-                    scaleOption.className = 'scale-option';
-                    scaleOption.dataset.value = i;
-                    
-                    const scaleNumber = document.createElement('div');
-                    scaleNumber.className = 'scale-number';
-                    scaleNumber.textContent = i;
-                    
-                    const scaleLabel = document.createElement('div');
-                    scaleLabel.className = 'scale-label';
-                    
-                    if (i === 0) scaleLabel.textContent = 'Nada provável';
-                    if (i === 10) scaleLabel.textContent = 'Ext. provável';
-                    
-                    scaleOption.appendChild(scaleNumber);
-                    scaleOption.appendChild(scaleLabel);
-                    
-                    scaleOption.addEventListener('click', function() {
-                        const siblings = this.parentElement.querySelectorAll('.scale-option');
-                        siblings.forEach(opt => opt.classList.remove('selected'));
-                        this.classList.add('selected');
-                    });
-                    
+                    const scaleOption = createScaleOption(i, i === 0 ? 'Nada provável' : (i === 10 ? 'Ext. provável' : ''));
                     scaleContainer2.appendChild(scaleOption);
                 }
                 
                 // Escala 1-5 para pergunta 4
                 const scaleContainer4 = document.querySelector('#question-4 .scale-container');
                 for (let i = 1; i <= 5; i++) {
-                    const scaleOption = document.createElement('div');
-                    scaleOption.className = 'scale-option';
-                    scaleOption.dataset.value = i;
-                    
-                    const scaleNumber = document.createElement('div');
-                    scaleNumber.className = 'scale-number';
-                    scaleNumber.textContent = i;
-                    
-                    const scaleLabel = document.createElement('div');
-                    scaleLabel.className = 'scale-label';
-                    
-                    if (i === 1) scaleLabel.textContent = 'Insatisfeito';
-                    if (i === 5) scaleLabel.textContent = 'Muito Satisfeito';
-                    
-                    scaleOption.appendChild(scaleNumber);
-                    scaleOption.appendChild(scaleLabel);
-                    
-                    scaleOption.addEventListener('click', function() {
-                        const siblings = this.parentElement.querySelectorAll('.scale-option');
-                        siblings.forEach(opt => opt.classList.remove('selected'));
-                        this.classList.add('selected');
-                    });
-                    
+                    const scaleOption = createScaleOption(i, i === 1 ? 'Insatisfeito' : (i === 5 ? 'Muito Satisfeito' : ''));
                     scaleContainer4.appendChild(scaleOption);
                 }
                 
                 // Escala 0-10 para pergunta 5
                 const scaleContainer5 = document.querySelector('#question-5 .scale-container');
                 for (let i = 0; i <= 10; i++) {
-                    const scaleOption = document.createElement('div');
-                    scaleOption.className = 'scale-option';
-                    scaleOption.dataset.value = i;
-                    
-                    const scaleNumber = document.createElement('div');
-                    scaleNumber.className = 'scale-number';
-                    scaleNumber.textContent = i;
-                    
-                    const scaleLabel = document.createElement('div');
-                    scaleLabel.className = 'scale-label';
-                    
-                    if (i === 0) scaleLabel.textContent = 'Nada provável';
-                    if (i === 10) scaleLabel.textContent = 'Ext. provável';
-                    
-                    scaleOption.appendChild(scaleNumber);
-                    scaleOption.appendChild(scaleLabel);
-                    
-                    scaleOption.addEventListener('click', function() {
-                        const siblings = this.parentElement.querySelectorAll('.scale-option');
-                        siblings.forEach(opt => opt.classList.remove('selected'));
-                        this.classList.add('selected');
-                    });
-                    
+                    const scaleOption = createScaleOption(i, i === 0 ? 'Nada provável' : (i === 10 ? 'Ext. provável' : ''));
                     scaleContainer5.appendChild(scaleOption);
                 }
             }
             
-            function simulateAudioVisualization() {
-                const audioVisualization = document.getElementById('audio-visualization');
+            function createScaleOption(value, label) {
+                const scaleOption = document.createElement('div');
+                scaleOption.className = 'scale-option';
+                scaleOption.dataset.value = value;
+                
+                const scaleNumber = document.createElement('div');
+                scaleNumber.className = 'scale-number';
+                scaleNumber.textContent = value;
+                
+                const scaleLabel = document.createElement('div');
+                scaleLabel.className = 'scale-label';
+                scaleLabel.textContent = label;
+                
+                scaleOption.appendChild(scaleNumber);
+                scaleOption.appendChild(scaleLabel);
+                
+                scaleOption.addEventListener('click', function() {
+                    const siblings = this.parentElement.querySelectorAll('.scale-option');
+                    siblings.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+                
+                return scaleOption;
+            }
+            
+            function simulateAudioVisualization(containerId) {
+                const audioVisualization = document.getElementById(containerId);
                 audioVisualization.innerHTML = '';
                 
                 // Criar barras de visualização
@@ -637,8 +877,8 @@
                 }, 100);
             }
             
-            function stopAudioVisualization() {
-                const bars = document.querySelectorAll('.audio-bar');
+            function stopAudioVisualization(containerId) {
+                const bars = document.querySelectorAll(`#${containerId} .audio-bar`);
                 bars.forEach(bar => bar.style.height = '5px');
             }
             
