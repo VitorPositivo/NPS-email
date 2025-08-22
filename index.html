@@ -1,11 +1,651 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arquivooo</title>
+    <title>Pesquisa de Satisfação - Positivo Tecnologia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --positivo-blue: #0066b3;
+            --positivo-light-blue: #d9ebf9;
+            --positivo-orange: #ff6600;
+            --positivo-gray: #f5f5f5;
+            --text-dark: #333;
+            --text-light: #666;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            max-width: 200px;
+            margin-bottom: 15px;
+        }
+        
+        h1 {
+            color: var(--positivo-blue);
+            margin-bottom: 10px;
+        }
+        
+        .intro {
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+        
+        .progress-container {
+            margin: 20px 0;
+            background-color: #e0e0e0;
+            border-radius: 20px;
+            height: 10px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            border-radius: 20px;
+            background-color: var(--positivo-blue);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .question-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .question-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--positivo-blue);
+            font-weight: 600;
+        }
+        
+        .options-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .option-btn {
+            padding: 12px 20px;
+            background-color: var(--positivo-light-blue);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .option-btn:hover {
+            background-color: #c5e0f7;
+        }
+        
+        .option-btn.selected {
+            background-color: var(--positivo-blue);
+            color: white;
+            border-color: var(--positivo-blue);
+        }
+        
+        .scale-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        
+        .scale-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            width: 60px;
+        }
+        
+        .scale-option:hover {
+            background-color: var(--positivo-light-blue);
+        }
+        
+        .scale-option.selected {
+            background-color: var(--positivo-blue);
+            color: white;
+        }
+        
+        .scale-number {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .scale-label {
+            font-size: 12px;
+            text-align: center;
+        }
+        
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 16px;
+            resize: vertical;
+        }
+        
+        .audio-container {
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .audio-btn {
+            background-color: var(--positivo-orange);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s;
+        }
+        
+        .audio-btn:hover {
+            background-color: #e55a00;
+        }
+        
+        .recording {
+            background-color: #ff3333;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        .audio-visualization {
+            height: 30px;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+        }
+        
+        .audio-bar {
+            width: 3px;
+            background-color: var(--positivo-blue);
+            height: 5px;
+            border-radius: 2px;
+            transition: height 0.1s;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .prev-btn {
+            background-color: #e0e0e0;
+            color: var(--text-dark);
+        }
+        
+        .prev-btn:hover {
+            background-color: #d0d0d0;
+        }
+        
+        .next-btn {
+            background-color: var(--positivo-blue);
+            color: white;
+        }
+        
+        .next-btn:hover {
+            background-color: #005599;
+        }
+        
+        .submit-btn {
+            background-color: var(--positivo-orange);
+            color: white;
+        }
+        
+        .submit-btn:hover {
+            background-color: #e55a00;
+        }
+        
+        .thank-you {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+        
+        .thank-you i {
+            font-size: 60px;
+            color: var(--positivo-blue);
+            margin-bottom: 20px;
+        }
+        
+        .thank-you h2 {
+            color: var(--positivo-blue);
+            margin-bottom: 15px;
+        }
+        
+        .equipment-name {
+            color: var(--positivo-orange);
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <p>Funciona? </p>
+    <div class="container">
+        <header>
+            <img src="https://www.positivotecnologia.com.br/wp-content/themes/positivo/img/logo-positivo.png" alt="Positivo Tecnologia" class="logo">
+            <h1>Pesquisa de Satisfação</h1>
+            <p class="intro">Sua opinião é muito importante para continuarmos melhorando nossos produtos e serviços.</p>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+        </header>
+        
+        <form id="satisfaction-survey">
+            <!-- Pergunta 1 -->
+            <div class="question-container active" id="question-1">
+                <p class="question-title">O seu problema com o equipamento <span class="equipment-name" id="equipment-name">Notebook Positivo</span>, foi resolvido?</p>
+                <div class="options-container">
+                    <button type="button" class="option-btn" data-value="sim">Sim</button>
+                    <button type="button" class="option-btn" data-value="parcialmente">Parcialmente</button>
+                    <button type="button" class="option-btn" data-value="nao">Não</button>
+                </div>
+                
+                <div class="nav-buttons">
+                    <div></div> <!-- Espaço vazio para alinhar o próximo botão à direita -->
+                    <button type="button" class="nav-btn next-btn">Próxima <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Pergunta 2 -->
+            <div class="question-container" id="question-2">
+                <p class="question-title">Com base na experiência recente com a nossa Assistência Técnica, qual é a probabilidade de você recomendar nosso serviço a um amigo ou familiar?</p>
+                <p class="intro">10 = Extremamente provável | 0 = Nada provável</p>
+                
+                <div class="scale-container">
+                    <!-- Gerado via JavaScript -->
+                </div>
+                
+                <div class="nav-buttons">
+                    <button type="button" class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Anterior</button>
+                    <button type="button" class="nav-btn next-btn">Próxima <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Pergunta 3 -->
+            <div class="question-container" id="question-3">
+                <p class="question-title">Qual o principal motivo para sua nota?</p>
+                <div class="options-container">
+                    <button type="button" class="option-btn" data-value="cordialidade">Cordialidade no atendimento</button>
+                    <button type="button" class="option-btn" data-value="tempo">Tempo de reparo</button>
+                    <button type="button" class="option-btn" data-value="clareza">Clareza e eficiência</button>
+                    <button type="button" class="option-btn" data-value="qualidade">Qualidade do serviço</button>
+                    <button type="button" class="option-btn" data-value="outro">Outro / Envie sua mensagem ou áudio</button>
+                </div>
+                
+                <div id="outro-container" style="display: none; margin-top: 15px;">
+                    <textarea placeholder="Por favor, especifique..." rows="3"></textarea>
+                    
+                    <div class="audio-container">
+                        <button type="button" class="audio-btn" id="record-audio">
+                            <i class="fas fa-microphone"></i> Gravar Áudio
+                        </button>
+                        <div class="audio-visualization" id="audio-visualization">
+                            <!-- Barras de visualização de áudio geradas via JS -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="nav-buttons">
+                    <button type="button" class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Anterior</button>
+                    <button type="button" class="nav-btn next-btn">Próxima <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Pergunta 4 -->
+            <div class="question-container" id="question-4">
+                <p class="question-title">No geral estou satisfeito com os serviços prestados pela Assistência Técnica Positivo</p>
+                <p class="intro">5 - Muito Satisfeito | 1 - Insatisfeito</p>
+                
+                <div class="scale-container">
+                    <!-- Gerado via JavaScript -->
+                </div>
+                
+                <div class="nav-buttons">
+                    <button type="button" class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Anterior</button>
+                    <button type="button" class="nav-btn next-btn">Próxima <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Pergunta 5 -->
+            <div class="question-container" id="question-5">
+                <p class="question-title">Agora que você avaliou nossa assistência técnica Positivo, como avaliaria o produto <span class="equipment-name">Notebook Positivo</span>?</p>
+                <p class="intro">10 = Extremamente provável | 0 = Nada provável</p>
+                
+                <div class="scale-container">
+                    <!-- Gerado via JavaScript -->
+                </div>
+                
+                <div class="nav-buttons">
+                    <button type="button" class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Anterior</button>
+                    <button type="button" class="nav-btn next-btn">Próxima <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Pergunta 6 -->
+            <div class="question-container" id="question-6">
+                <p class="question-title">Você gostaria de nos deixar alguma mensagem? (sugestão, melhoria, crítica, elogios...)</p>
+                <textarea placeholder="Digite sua mensagem aqui..." rows="5"></textarea>
+                
+                <div class="nav-buttons">
+                    <button type="button" class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Anterior</button>
+                    <button type="button" class="nav-btn submit-btn">Enviar Pesquisa <i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </form>
+        
+        <div class="thank-you" id="thank-you">
+            <i class="fas fa-check-circle"></i>
+            <h2>Obrigado pela sua participação!</h2>
+            <p>Sua opinião é muito valiosa para continuarmos melhorando nossos produtos e serviços.</p>
+            <p>Equipe Positivo Tecnologia</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configurações iniciais
+            const totalQuestions = 6;
+            let currentQuestion = 1;
+            const equipmentName = "Notebook Positivo"; // Seria substituído pelo equipamento real
+            
+            // Elementos DOM
+            const progressBar = document.getElementById('progress-bar');
+            const equipmentNameElements = document.querySelectorAll('.equipment-name');
+            const questionContainers = document.querySelectorAll('.question-container');
+            const nextButtons = document.querySelectorAll('.next-btn');
+            const prevButtons = document.querySelectorAll('.prev-btn');
+            const submitButton = document.querySelector('.submit-btn');
+            const surveyForm = document.getElementById('satisfaction-survey');
+            const thankYouSection = document.getElementById('thank-you');
+            
+            // Atualizar o nome do equipamento em todos os lugares
+            equipmentNameElements.forEach(el => {
+                el.textContent = equipmentName;
+            });
+            
+            // Inicializar escalas de avaliação
+            initScales();
+            
+            // Configurar navegação
+            nextButtons.forEach(button => {
+                button.addEventListener('click', goToNextQuestion);
+            });
+            
+            prevButtons.forEach(button => {
+                button.addEventListener('click', goToPrevQuestion);
+            });
+            
+            // Configurar botões de opção
+            const optionButtons = document.querySelectorAll('.option-btn');
+            optionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remover seleção anterior no mesmo grupo
+                    const parent = this.parentElement;
+                    const siblings = parent.querySelectorAll('.option-btn');
+                    siblings.forEach(btn => btn.classList.remove('selected'));
+                    
+                    // Selecionar o atual
+                    this.classList.add('selected');
+                    
+                    // Se for a opção "Outro", mostrar campo adicional
+                    if (this.dataset.value === 'outro') {
+                        document.getElementById('outro-container').style.display = 'block';
+                    } else {
+                        document.getElementById('outro-container').style.display = 'none';
+                    }
+                });
+            });
+            
+            // Configurar gravação de áudio (simulação)
+            const recordAudioBtn = document.getElementById('record-audio');
+            let isRecording = false;
+            
+            recordAudioBtn.addEventListener('click', function() {
+                isRecording = !isRecording;
+                
+                if (isRecording) {
+                    this.classList.add('recording');
+                    this.innerHTML = '<i class="fas fa-stop"></i> Parar Gravação';
+                    simulateAudioVisualization();
+                } else {
+                    this.classList.remove('recording');
+                    this.innerHTML = '<i class="fas fa-microphone"></i> Gravar Áudio';
+                    stopAudioVisualization();
+                    alert('Áudio gravado com sucesso!');
+                }
+            });
+            
+            // Configurar envio do formulário
+            submitButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Simular envio dos dados
+                surveyForm.style.display = 'none';
+                thankYouSection.style.display = 'block';
+                
+                // Aqui iria o código para enviar os dados para o servidor
+                console.log('Formulário enviado!');
+            });
+            
+            // Funções de navegação
+            function goToNextQuestion() {
+                if (currentQuestion < totalQuestions) {
+                    questionContainers[currentQuestion - 1].classList.remove('active');
+                    currentQuestion++;
+                    questionContainers[currentQuestion - 1].classList.add('active');
+                    updateProgressBar();
+                }
+            }
+            
+            function goToPrevQuestion() {
+                if (currentQuestion > 1) {
+                    questionContainers[currentQuestion - 1].classList.remove('active');
+                    currentQuestion--;
+                    questionContainers[currentQuestion - 1].classList.add('active');
+                    updateProgressBar();
+                }
+            }
+            
+            function updateProgressBar() {
+                const progress = (currentQuestion / totalQuestions) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+            
+            function initScales() {
+                // Escala 0-10 para pergunta 2
+                const scaleContainer2 = document.querySelector('#question-2 .scale-container');
+                for (let i = 0; i <= 10; i++) {
+                    const scaleOption = document.createElement('div');
+                    scaleOption.className = 'scale-option';
+                    scaleOption.dataset.value = i;
+                    
+                    const scaleNumber = document.createElement('div');
+                    scaleNumber.className = 'scale-number';
+                    scaleNumber.textContent = i;
+                    
+                    const scaleLabel = document.createElement('div');
+                    scaleLabel.className = 'scale-label';
+                    
+                    if (i === 0) scaleLabel.textContent = 'Nada provável';
+                    if (i === 10) scaleLabel.textContent = 'Ext. provável';
+                    
+                    scaleOption.appendChild(scaleNumber);
+                    scaleOption.appendChild(scaleLabel);
+                    
+                    scaleOption.addEventListener('click', function() {
+                        const siblings = this.parentElement.querySelectorAll('.scale-option');
+                        siblings.forEach(opt => opt.classList.remove('selected'));
+                        this.classList.add('selected');
+                    });
+                    
+                    scaleContainer2.appendChild(scaleOption);
+                }
+                
+                // Escala 1-5 para pergunta 4
+                const scaleContainer4 = document.querySelector('#question-4 .scale-container');
+                for (let i = 1; i <= 5; i++) {
+                    const scaleOption = document.createElement('div');
+                    scaleOption.className = 'scale-option';
+                    scaleOption.dataset.value = i;
+                    
+                    const scaleNumber = document.createElement('div');
+                    scaleNumber.className = 'scale-number';
+                    scaleNumber.textContent = i;
+                    
+                    const scaleLabel = document.createElement('div');
+                    scaleLabel.className = 'scale-label';
+                    
+                    if (i === 1) scaleLabel.textContent = 'Insatisfeito';
+                    if (i === 5) scaleLabel.textContent = 'Muito Satisfeito';
+                    
+                    scaleOption.appendChild(scaleNumber);
+                    scaleOption.appendChild(scaleLabel);
+                    
+                    scaleOption.addEventListener('click', function() {
+                        const siblings = this.parentElement.querySelectorAll('.scale-option');
+                        siblings.forEach(opt => opt.classList.remove('selected'));
+                        this.classList.add('selected');
+                    });
+                    
+                    scaleContainer4.appendChild(scaleOption);
+                }
+                
+                // Escala 0-10 para pergunta 5
+                const scaleContainer5 = document.querySelector('#question-5 .scale-container');
+                for (let i = 0; i <= 10; i++) {
+                    const scaleOption = document.createElement('div');
+                    scaleOption.className = 'scale-option';
+                    scaleOption.dataset.value = i;
+                    
+                    const scaleNumber = document.createElement('div');
+                    scaleNumber.className = 'scale-number';
+                    scaleNumber.textContent = i;
+                    
+                    const scaleLabel = document.createElement('div');
+                    scaleLabel.className = 'scale-label';
+                    
+                    if (i === 0) scaleLabel.textContent = 'Nada provável';
+                    if (i === 10) scaleLabel.textContent = 'Ext. provável';
+                    
+                    scaleOption.appendChild(scaleNumber);
+                    scaleOption.appendChild(scaleLabel);
+                    
+                    scaleOption.addEventListener('click', function() {
+                        const siblings = this.parentElement.querySelectorAll('.scale-option');
+                        siblings.forEach(opt => opt.classList.remove('selected'));
+                        this.classList.add('selected');
+                    });
+                    
+                    scaleContainer5.appendChild(scaleOption);
+                }
+            }
+            
+            function simulateAudioVisualization() {
+                const audioVisualization = document.getElementById('audio-visualization');
+                audioVisualization.innerHTML = '';
+                
+                // Criar barras de visualização
+                for (let i = 0; i < 20; i++) {
+                    const bar = document.createElement('div');
+                    bar.className = 'audio-bar';
+                    audioVisualization.appendChild(bar);
+                }
+                
+                // Animar as barras
+                const bars = audioVisualization.querySelectorAll('.audio-bar');
+                const interval = setInterval(() => {
+                    if (!isRecording) {
+                        clearInterval(interval);
+                        bars.forEach(bar => bar.style.height = '5px');
+                        return;
+                    }
+                    
+                    bars.forEach(bar => {
+                        const height = Math.floor(Math.random() * 25) + 5;
+                        bar.style.height = `${height}px`;
+                    });
+                }, 100);
+            }
+            
+            function stopAudioVisualization() {
+                const bars = document.querySelectorAll('.audio-bar');
+                bars.forEach(bar => bar.style.height = '5px');
+            }
+            
+            // Inicializar barra de progresso
+            updateProgressBar();
+        });
+    </script>
 </body>
 </html>
