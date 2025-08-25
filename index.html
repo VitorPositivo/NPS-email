@@ -23,80 +23,111 @@
         }
         
         body {
-            background-color: #f9f9f9;
+            background: linear-gradient(135deg, var(--positivo-light-blue) 0%, #ffffff 100%);
             color: var(--text-dark);
             line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
         }
         
         .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
         
         header {
             text-align: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px 20px;
+            background: var(--positivo-blue);
+            color: white;
         }
         
         .logo {
-            max-width: 200px;
+            max-width: 180px;
             margin-bottom: 15px;
         }
         
         h1 {
-            color: var(--positivo-blue);
             margin-bottom: 10px;
+            font-size: 28px;
         }
         
         .intro {
-            color: var(--text-light);
+            opacity: 0.9;
             margin-bottom: 20px;
         }
         
-        .progress-container {
-            margin: 20px 0;
-            background-color: #e0e0e0;
-            border-radius: 20px;
-            height: 10px;
+        .welcome-container {
+            padding: 30px;
+            text-align: center;
+            background: white;
         }
         
-        .progress-bar {
-            height: 100%;
-            border-radius: 20px;
-            background-color: var(--positivo-blue);
-            width: 0%;
-            transition: width 0.5s ease;
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            background: linear-gradient(135deg, var(--positivo-blue) 0%, var(--positivo-light-blue) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
-        .question-container {
-            background-color: white;
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            display: none;
-        }
-        
-        .active {
-            display: block;
-            animation: fadeIn 0.5s;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .question-title {
+        .welcome-message {
             font-size: 18px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .highlight {
+            color: var(--positivo-blue);
+            font-weight: bold;
+        }
+        
+        .survey-form {
+            padding: 0 30px 30px;
+        }
+        
+        .form-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: var(--positivo-gray);
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .form-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title {
+            font-size: 20px;
             margin-bottom: 15px;
             color: var(--positivo-blue);
             font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+            color: var(--positivo-orange);
+        }
+        
+        .section-description {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            font-size: 15px;
         }
         
         .options-container {
@@ -108,16 +139,19 @@
         
         .option-btn {
             padding: 12px 20px;
-            background-color: var(--positivo-light-blue);
-            border: 2px solid transparent;
+            background-color: white;
+            border: 2px solid var(--positivo-light-blue);
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
             font-weight: 500;
+            flex: 1;
+            min-width: 120px;
         }
         
         .option-btn:hover {
-            background-color: #c5e0f7;
+            background-color: var(--positivo-light-blue);
+            border-color: var(--positivo-blue);
         }
         
         .option-btn.selected {
@@ -143,25 +177,45 @@
             transition: all 0.3s;
             width: 60px;
             margin-bottom: 10px;
+            background: white;
+            border: 2px solid transparent;
         }
         
         .scale-option:hover {
-            background-color: var(--positivo-light-blue);
+            border-color: var(--positivo-blue);
         }
         
         .scale-option.selected {
             background-color: var(--positivo-blue);
             color: white;
+            transform: scale(1.05);
+        }
+        
+        .scale-number {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .scale-label {
+            font-size: 12px;
+            text-align: center;
         }
         
         textarea, input[type="text"] {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
+            padding: 15px;
+            border: 2px solid #ddd;
             border-radius: 8px;
             margin-top: 10px;
             font-size: 16px;
             resize: vertical;
+            transition: border-color 0.3s;
+        }
+        
+        textarea:focus, input[type="text"]:focus {
+            border-color: var(--positivo-blue);
+            outline: none;
         }
         
         .audio-container, .file-container {
@@ -169,7 +223,7 @@
             text-align: center;
         }
         
-        .audio-btn, .file-btn {
+        .action-btn {
             background-color: var(--positivo-orange);
             color: white;
             border: none;
@@ -180,12 +234,13 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
             margin: 5px;
         }
         
-        .audio-btn:hover, .file-btn:hover {
+        .action-btn:hover {
             background-color: #e55a00;
+            transform: translateY(-2px);
         }
         
         .recording {
@@ -216,51 +271,34 @@
             transition: height 0.1s;
         }
         
-        .nav-buttons {
-            display: flex;
-            justify-content: space-between;
+        .submit-container {
+            text-align: center;
             margin-top: 30px;
-        }
-        
-        .nav-btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        
-        .prev-btn {
-            background-color: #e0e0e0;
-            color: var(--text-dark);
-        }
-        
-        .prev-btn:hover {
-            background-color: #d0d0d0;
-        }
-        
-        .next-btn {
-            background-color: var(--positivo-blue);
-            color: white;
-        }
-        
-        .next-btn:hover {
-            background-color: #005599;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
         }
         
         .submit-btn {
-            background-color: var(--positivo-orange);
+            background: linear-gradient(135deg, var(--positivo-blue) 0%, #004d8c 100%);
             color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
         .submit-btn:hover {
-            background-color: #e55a00;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
         
         .thank-you {
             text-align: center;
-            padding: 40px;
+            padding: 50px 30px;
             display: none;
         }
         
@@ -280,50 +318,24 @@
             font-weight: bold;
         }
         
-        .welcome-container {
-            background-color: white;
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        
-        .avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin: 0 auto 15px;
-            background-color: var(--positivo-light-blue);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-            color: var(--positivo-blue);
-        }
-        
-        .welcome-message {
-            font-size: 18px;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-        
-        .highlight {
-            color: var(--positivo-orange);
-            font-weight: bold;
-        }
-        
         .problem-not-resolved {
             background-color: #fff4f4;
             border-left: 5px solid #ff6b6b;
             padding: 20px;
             margin: 20px 0;
             border-radius: 8px;
+            display: none;
         }
         
         .problem-not-resolved h3 {
             color: #d63636;
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .problem-not-resolved h3 i {
+            margin-right: 10px;
         }
         
         .feedback-options {
@@ -331,6 +343,7 @@
             justify-content: center;
             gap: 15px;
             margin: 20px 0;
+            flex-wrap: wrap;
         }
         
         .feedback-option-btn {
@@ -342,6 +355,8 @@
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s;
+            flex: 1;
+            min-width: 120px;
         }
         
         .feedback-option-btn:hover {
@@ -371,6 +386,7 @@
             height: 100px;
             border-radius: 8px;
             overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
         }
         
         .file-preview-item img {
@@ -383,7 +399,7 @@
             position: absolute;
             top: 5px;
             right: 5px;
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(255, 255, 255, 0.9);
             border-radius: 50%;
             width: 24px;
             height: 24px;
@@ -393,6 +409,76 @@
             cursor: pointer;
             font-size: 14px;
             color: #ff3333;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                border-radius: 10px;
+            }
+            
+            header {
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .welcome-container, .survey-form {
+                padding: 20px 15px;
+            }
+            
+            .form-section {
+                padding: 20px;
+            }
+            
+            .options-container {
+                flex-direction: column;
+            }
+            
+            .scale-container {
+                justify-content: center;
+            }
+            
+            .scale-option {
+                width: 50px;
+                margin: 5px;
+            }
+            
+            .feedback-options {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .scale-option {
+                width: 40px;
+                padding: 8px 5px;
+            }
+            
+            .scale-number {
+                font-size: 20px;
+            }
+            
+            .scale-label {
+                font-size: 10px;
+            }
+            
+            .action-btn {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+            
+            .submit-btn {
+                padding: 14px 30px;
+                font-size: 16px;
+            }
         }
     </style>
 </head>
@@ -401,14 +487,11 @@
         <header>
             <img src="https://www.positivotecnologia.com.br/wp-content/themes/positivo/img/logo-positivo.png" alt="Positivo Tecnologia" class="logo">
             <h1>Pesquisa de Satisfação</h1>
-            
-            <div class="progress-container">
-                <div class="progress-bar" id="progress-bar"></div>
-            </div>
+            <p class="intro">Sua opinião é muito importante para continuarmos melhorando</p>
         </header>
         
         <!-- Tela de Boas-Vindas -->
-        <div class="welcome-container active" id="welcome-screen">
+        <div class="welcome-container" id="welcome-screen">
             <div class="avatar">
                 <i class="fas fa-robot"></i>
             </div>
@@ -423,33 +506,29 @@
                 
                 Sua opinião é super importante para nós! Você pode me contar como foi?
             </p>
-            <button type="button" class="nav-btn next-btn" id="start-survey">Iniciar Pesquisa <i class="fas fa-arrow-right"></i></button>
+            <button type="button" class="submit-btn" id="start-survey">Iniciar Pesquisa <i class="fas fa-arrow-right"></i></button>
         </div>
         
-        <form id="satisfaction-survey">
+        <!-- Formulário de Pesquisa -->
+        <form id="satisfaction-survey" class="survey-form" style="display: none;">
             <!-- Pergunta 1 -->
-            <div class="question-container" id="question-1">
-                <p class="question-title">O seu problema com o equipamento <span class="equipment-name" id="equipment-name">Notebook Positivo</span>, foi resolvido?</p>
-                <div class="options-container">
-                    <button type="button" class="option-btn" data-value="sim">Sim</button>git 
-                    <button type="button" class="option-btn" data-value="nao">Não</button>
-                </div>
+            <div class="form-section">
+                <h3 class="section-title"><i class="fas fa-tools"></i> Resolução do Problema</h3>
+                <p class="section-description">O seu problema com o equipamento <span class="equipment-name">Notebook Positivo</span> foi resolvido?</p>
                 
-                <div class="nav-buttons">
-                    <div></div>
-                    <button type="button" class="nav-btn next-btn">Próxima <i class="fas fa-arrow-right"></i></button>
+                <div class="options-container">
+                    <button type="button" class="option-btn" data-value="sim">Sim</button>
+                    <button type="button" class="option-btn" data-value="nao">Não</button>
                 </div>
             </div>
             
             <!-- Tela de Problema Não Resolvido -->
-            <div class="question-container" id="problem-not-resolved">
-                <div class="problem-not-resolved">
-                    <h3><i class="fas fa-exclamation-circle"></i> Que pena!</h3>
-                    <p>Não é essa experiência que gostaríamos de passar a nossos clientes.</p>
-                    <p>A nossa equipe já foi notificada e entrará em contato em breve para resolver o problema com seu equipamento.</p>
-                </div>
+            <div class="problem-not-resolved" id="problem-not-resolved">
+                <h3><i class="fas fa-exclamation-circle"></i> Que pena!</h3>
+                <p>Não é essa experiência que gostaríamos de passar a nossos clientes.</p>
+                <p>A nossa equipe já foi notificada e entrará em contato em breve para resolver o problema com seu equipamento.</p>
                 
-                <p class="question-title">Deseja adicionar mais informações ou possui outro feedback?</p>
+                <p class="section-description">Deseja adicionar mais informações ou possui outro feedback?</p>
                 
                 <div class="feedback-options">
                     <button type="button" class="feedback-option-btn" data-value="sim">Sim</button>
@@ -460,13 +539,13 @@
                     <textarea placeholder="Por favor, compartilhe mais detalhes sobre sua experiência..." rows="4"></textarea>
                     
                     <div class="file-container">
-                        <button type="button" class file-btn>
+                        <button type="button" class="action-btn">
                             <i class="fas fa-camera"></i> Adicionar Fotos
                         </button>
-                        <button type="button" class="file-btn">
+                        <button type="button" class="action-btn">
                             <i class="fas fa-video"></i> Adicionar Vídeo
                         </button>
-                        <button type="button" class="audio-btn" id="record-audio">
+                        <button type="button" class="action-btn" id="record-audio">
                             <i class="fas fa-microphone"></i> Gravar Áudio
                         </button>
                     </div>
@@ -475,31 +554,24 @@
                     
                     <div class="file-preview" id="file-preview"></div>
                 </div>
-                
-                <div class="nav-buttons">
-                    <button type="button" class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Anterior</button>
-                    <button type="button" class="nav-btn next-btn">Continuar <i class="fas fa-arrow-right"></i></button>
-                </div>
             </div>
             
             <!-- Pergunta 2 -->
-            <div class="question-container" id="question-2">
-                <p class="question-title">Com base na experiência recente com a nossa Assistência Técnica, qual é a probabilidade de você recomendar nosso serviço a um amigo ou familiar?</p>
-                <p class="intro">10 = Extremamente provável | 0 = Nada provável</p>
+            <div class="form-section">
+                <h3 class="section-title"><i class="fas fa-star"></i> Recomendação</h3>
+                <p class="section-description">Com base na experiência recente com a nossa Assistência Técnica, qual é a probabilidade de você recomendar nosso serviço a um amigo ou familiar?</p>
+                <p class="section-description"><small>10 = Extremamente provável | 0 = Nada provável</small></p>
                 
-                <div class="scale-container">
+                <div class="scale-container" id="scale-question-2">
                     <!-- Gerado via JavaScript -->
-                </div>
-                
-                <div class="nav-buttons">
-                    <button type="button" class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Anterior</button>
-                    <button type="button" class="nav-btn next-btn">Próxima <i class="fas fa-arrow-right"></i></button>
                 </div>
             </div>
             
             <!-- Pergunta 3 -->
-            <div class="question-container" id="question-3">
-                <p class="question-title">Qual o principal motivo para sua nota?</p>
+            <div class="form-section">
+                <h3 class="section-title"><i class="fas fa-comment"></i> Motivo da Nota</h3>
+                <p class="section-description">Qual o principal motivo para sua nota?</p>
+                
                 <div class="options-container">
                     <button type="button" class="option-btn" data-value="cordialidade">Cordialidade no atendimento</button>
                     <button type="button" class="option-btn" data-value="tempo">Tempo de reparo</button>
@@ -512,58 +584,45 @@
                     <textarea placeholder="Por favor, especifique..." rows="3"></textarea>
                     
                     <div class="audio-container">
-                        <button type="button" class="audio-btn" id="record-audio-2">
+                        <button type="button" class="action-btn" id="record-audio-2">
                             <i class="fas fa-microphone"></i> Gravar Áudio
                         </button>
                         <div class="audio-visualization" id="audio-visualization-2"></div>
                     </div>
                 </div>
-                
-                <div class="nav-buttons">
-                    <button type="button" class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Anterior</button>
-                    <button type="button" class="nav-btn next-btn">Próxima <i class="fas fa-arrow-right"></i></button>
-                </div>
             </div>
             
             <!-- Pergunta 4 -->
-            <div class="question-container" id="question-4">
-                <p class="question-title">No geral estou satisfeito com os serviços prestados pela Assistência Técnica Positivo</p>
-                <p class="intro">5 - Muito Satisfeito | 1 - Insatisfeito</p>
+            <div class="form-section">
+                <h3 class="section-title"><i class="fas fa-smile"></i> Satisfação Geral</h3>
+                <p class="section-description">No geral estou satisfeito com os serviços prestados pela Assistência Técnica Positivo</p>
+                <p class="section-description"><small>5 - Muito Satisfeito | 1 - Insatisfeito</small></p>
                 
-                <div class="scale-container">
+                <div class="scale-container" id="scale-question-4">
                     <!-- Gerado via JavaScript -->
-                </div>
-                
-                <div class="nav-buttons">
-                    <button type="button" class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Anterior</button>
-                    <button type="button" class="nav-btn next-btn">Próxima <i class="fas fa-arrow-right"></i></button>
                 </div>
             </div>
             
             <!-- Pergunta 5 -->
-            <div class="question-container" id="question-5">
-                <p class="question-title">Agora que você avaliou nossa assistência técnica Positivo, como avaliaria o produto <span class="equipment-name">Notebook Positivo</span>?</p>
-                <p class="intro">10 = Extremamente provável | 0 = Nada provável</p>
+            <div class="form-section">
+                <h3 class="section-title"><i class="fas fa-laptop"></i> Avaliação do Produto</h3>
+                <p class="section-description">Agora que você avaliou nossa assistência técnica Positivo, como avaliaria o produto <span class="equipment-name">Notebook Positivo</span>?</p>
+                <p class="section-description"><small>10 = Extremamente provável | 0 = Nada provável</small></p>
                 
-                <div class="scale-container">
+                <div class="scale-container" id="scale-question-5">
                     <!-- Gerado via JavaScript -->
-                </div>
-                
-                <div class="nav-buttons">
-                    <button type="button" class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Anterior</button>
-                    <button type="button" class="nav-btn next-btn">Próxima <i class="fas fa-arrow-right"></i></button>
                 </div>
             </div>
             
             <!-- Pergunta 6 -->
-            <div class="question-container" id="question-6">
-                <p class="question-title">Você gostaria de nos deixar alguma mensagem? (sugestão, melhoria, crítica, elogios...)</p>
+            <div class="form-section">
+                <h3 class="section-title"><i class="fas fa-envelope"></i> Mensagem Final</h3>
+                <p class="section-description">Você gostaria de nos deixar alguma mensagem? (sugestão, melhoria, crítica, elogios...)</p>
                 <textarea placeholder="Digite sua mensagem aqui..." rows="5"></textarea>
-                
-                <div class="nav-buttons">
-                    <button type="button" class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Anterior</button>
-                    <button type="button" class="nav-btn submit-btn">Enviar Pesquisa <i class="fas fa-paper-plane"></i></button>
-                </div>
+            </div>
+            
+            <div class="submit-container">
+                <button type="button" class="submit-btn" id="submit-survey">Enviar Pesquisa <i class="fas fa-paper-plane"></i></button>
             </div>
         </form>
         
@@ -578,26 +637,19 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Configurações iniciais
-            const totalQuestions = 6;
-            let currentQuestion = 0; // 0 = tela de boas-vindas
             const equipmentName = "Notebook Positivo"; // Seria substituído pelo equipamento real
             const protocolNumber = "CT789123"; // Número do protocolo
             const closureDate = "25/10/2023"; // Data de encerramento
             
             // Elementos DOM
-            const progressBar = document.getElementById('progress-bar');
-            const equipmentNameElements = document.querySelectorAll('.equipment-name');
             const welcomeScreen = document.getElementById('welcome-screen');
             const protocolElement = document.getElementById('protocol-number');
             const closureDateElement = document.getElementById('closure-date');
-            const questionContainers = document.querySelectorAll('.question-container');
-            const nextButtons = document.querySelectorAll('.next-btn');
-            const prevButtons = document.querySelectorAll('.prev-btn');
-            const submitButton = document.querySelector('.submit-btn');
             const surveyForm = document.getElementById('satisfaction-survey');
             const thankYouSection = document.getElementById('thank-you');
             const startSurveyBtn = document.getElementById('start-survey');
-            const problemNotResolvedScreen = document.getElementById('problem-not-resolved');
+            const submitSurveyBtn = document.getElementById('submit-survey');
+            const problemNotResolved = document.getElementById('problem-not-resolved');
             const feedbackOptionBtns = document.querySelectorAll('.feedback-option-btn');
             const additionalFeedback = document.getElementById('additional-feedback');
             
@@ -605,29 +657,16 @@
             protocolElement.textContent = protocolNumber;
             closureDateElement.textContent = closureDate;
             
-            // Atualizar o nome do equipamento em todos os lugares
-            equipmentNameElements.forEach(el => {
-                el.textContent = equipmentName;
-            });
-            
             // Inicializar escalas de avaliação
             initScales();
             
-            // Configurar navegação
-            nextButtons.forEach(button => {
-                button.addEventListener('click', goToNextQuestion);
-            });
-            
-            prevButtons.forEach(button => {
-                button.addEventListener('click', goToPrevQuestion);
-            });
-            
             // Iniciar pesquisa
             startSurveyBtn.addEventListener('click', function() {
-                welcomeScreen.classList.remove('active');
-                currentQuestion = 1;
-                document.getElementById('question-1').classList.add('active');
-                updateProgressBar();
+                welcomeScreen.style.display = 'none';
+                surveyForm.style.display = 'block';
+                
+                // Scroll suave para o topo do formulário
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             });
             
             // Configurar botões de opção
@@ -642,16 +681,23 @@
                     // Selecionar o atual
                     this.classList.add('selected');
                     
+                    // Se for a primeira pergunta e resposta for "Não", mostrar tela especial
+                    if (this.parentElement.parentElement.querySelector('.section-title').textContent.includes('Resolução do Problema') && this.dataset.value === 'nao') {
+                        problemNotResolved.style.display = 'block';
+                        
+                        // Scroll suave para a seção de problema não resolvido
+                        setTimeout(() => {
+                            problemNotResolved.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 300);
+                    } else if (this.parentElement.parentElement.querySelector('.section-title').textContent.includes('Resolução do Problema')) {
+                        problemNotResolved.style.display = 'none';
+                    }
+                    
                     // Se for a opção "Outro", mostrar campo adicional
                     if (this.dataset.value === 'outro') {
                         document.getElementById('outro-container').style.display = 'block';
                     } else {
                         document.getElementById('outro-container').style.display = 'none';
-                    }
-                    
-                    // Se for a primeira pergunta e resposta for "Não", preparar para mostrar tela especial
-                    if (this.parentElement.parentElement.id === 'question-1' && this.dataset.value === 'nao') {
-                        // Vamos lidar com isso na navegação
                     }
                 });
             });
@@ -669,6 +715,11 @@
                     // Mostrar/ocultar campos adicionais com base na seleção
                     if (this.dataset.value === 'sim') {
                         additionalFeedback.style.display = 'block';
+                        
+                        // Scroll suave para a seção de feedback adicional
+                        setTimeout(() => {
+                            additionalFeedback.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 300);
                     } else {
                         additionalFeedback.style.display = 'none';
                     }
@@ -711,113 +762,39 @@
             });
             
             // Configurar envio do formulário
-            submitButton.addEventListener('click', function(e) {
+            submitSurveyBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 
                 // Simular envio dos dados
                 surveyForm.style.display = 'none';
                 thankYouSection.style.display = 'block';
                 
+                // Scroll suave para a mensagem de agradecimento
+                setTimeout(() => {
+                    thankYouSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 300);
+                
                 // Aqui iria o código para enviar os dados para o servidor
                 console.log('Formulário enviado!');
             });
             
-            // Funções de navegação
-            function goToNextQuestion() {
-                // Verificar se estamos na primeira pergunta e a resposta foi "Não"
-                if (currentQuestion === 1) {
-                    const selectedOption = document.querySelector('#question-1 .option-btn.selected');
-                    if (selectedOption && selectedOption.dataset.value === 'nao') {
-                        // Ir para a tela de problema não resolvido em vez da próxima pergunta
-                        document.getElementById('question-1').classList.remove('active');
-                        problemNotResolvedScreen.classList.add('active');
-                        currentQuestion = 1.5; // Tela especial
-                        updateProgressBar();
-                        return;
-                    }
-                }
-                
-                // Verificar se estamos na tela de problema não resolvido
-                if (currentQuestion === 1.5) {
-                    problemNotResolvedScreen.classList.remove('active');
-                    currentQuestion = 2;
-                    document.getElementById('question-2').classList.add('active');
-                    updateProgressBar();
-                    return;
-                }
-                
-                // Navegação normal
-                if (currentQuestion < totalQuestions) {
-                    document.getElementById(`question-${currentQuestion}`).classList.remove('active');
-                    currentQuestion++;
-                    document.getElementById(`question-${currentQuestion}`).classList.add('active');
-                    updateProgressBar();
-                }
-            }
-            
-            function goToPrevQuestion() {
-                // Verificar se estamos na tela de problema não resolvido
-                if (currentQuestion === 1.5) {
-                    problemNotResolvedScreen.classList.remove('active');
-                    currentQuestion = 1;
-                    document.getElementById('question-1').classList.add('active');
-                    updateProgressBar();
-                    return;
-                }
-                
-                // Verificar se estamos na segunda pergunta e viemos de uma tela especial
-                if (currentQuestion === 2 && problemNotResolvedScreen.classList.contains('active') === false) {
-                    document.getElementById('question-2').classList.remove('active');
-                    currentQuestion = 1.5;
-                    problemNotResolvedScreen.classList.add('active');
-                    updateProgressBar();
-                    return;
-                }
-                
-                // Navegação normal
-                if (currentQuestion > 1) {
-                    document.getElementById(`question-${currentQuestion}`).classList.remove('active');
-                    currentQuestion--;
-                    document.getElementById(`question-${currentQuestion}`).classList.add('active');
-                    updateProgressBar();
-                } else if (currentQuestion === 1) {
-                    // Voltar para a tela de boas-vindas
-                    document.getElementById('question-1').classList.remove('active');
-                    welcomeScreen.classList.add('active');
-                    currentQuestion = 0;
-                    updateProgressBar();
-                }
-            }
-            
-            function updateProgressBar() {
-                let progress;
-                if (currentQuestion === 0) {
-                    progress = 0;
-                } else if (currentQuestion === 1.5) {
-                    progress = (1.5 / totalQuestions) * 100;
-                } else {
-                    progress = (currentQuestion / totalQuestions) * 100;
-                }
-                progressBar.style.width = `${progress}%`;
-            }
-            
             function initScales() {
                 // Escala 0-10 para pergunta 2
-                const scaleContainer2 = document.querySelector('#question-2 .scale-container');
+                const scaleContainer2 = document.getElementById('scale-question-2');
                 for (let i = 0; i <= 10; i++) {
                     const scaleOption = createScaleOption(i, i === 0 ? 'Nada provável' : (i === 10 ? 'Ext. provável' : ''));
                     scaleContainer2.appendChild(scaleOption);
                 }
                 
                 // Escala 1-5 para pergunta 4
-                const scaleContainer4 = document.querySelector('#question-4 .scale-container');
+                const scaleContainer4 = document.getElementById('scale-question-4');
                 for (let i = 1; i <= 5; i++) {
                     const scaleOption = createScaleOption(i, i === 1 ? 'Insatisfeito' : (i === 5 ? 'Muito Satisfeito' : ''));
                     scaleContainer4.appendChild(scaleOption);
                 }
                 
                 // Escala 0-10 para pergunta 5
-                const scaleContainer5 = document.querySelector('#question-5 .scale-container');
+                const scaleContainer5 = document.getElementById('scale-question-5');
                 for (let i = 0; i <= 10; i++) {
                     const scaleOption = createScaleOption(i, i === 0 ? 'Nada provável' : (i === 10 ? 'Ext. provável' : ''));
                     scaleContainer5.appendChild(scaleOption);
@@ -880,9 +857,6 @@
                 const bars = document.querySelectorAll(`#${containerId} .audio-bar`);
                 bars.forEach(bar => bar.style.height = '5px');
             }
-            
-            // Inicializar barra de progresso
-            updateProgressBar();
         });
     </script>
 </body>
